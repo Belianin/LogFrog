@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFrog.Core", "LogFrog.Core\LogFrog.Core.csproj", "{A56FF574-625B-40A8-9AE7-821CAF89BDDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFrog", "LogFrog\LogFrog.csproj", "{2B75AE42-33FE-48D1-B1EB-A0EFB9EC3FD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFrog.Telegram", "LogFrog.Telegram\LogFrog.Telegram.csproj", "{B33CCC96-703B-4CB1-A3D3-2B8E87884516}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A56FF574-625B-40A8-9AE7-821CAF89BDDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56FF574-625B-40A8-9AE7-821CAF89BDDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56FF574-625B-40A8-9AE7-821CAF89BDDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56FF574-625B-40A8-9AE7-821CAF89BDDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B75AE42-33FE-48D1-B1EB-A0EFB9EC3FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B75AE42-33FE-48D1-B1EB-A0EFB9EC3FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B75AE42-33FE-48D1-B1EB-A0EFB9EC3FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B75AE42-33FE-48D1-B1EB-A0EFB9EC3FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33CCC96-703B-4CB1-A3D3-2B8E87884516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33CCC96-703B-4CB1-A3D3-2B8E87884516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33CCC96-703B-4CB1-A3D3-2B8E87884516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33CCC96-703B-4CB1-A3D3-2B8E87884516}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
