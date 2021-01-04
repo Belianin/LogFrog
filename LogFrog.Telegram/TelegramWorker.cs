@@ -38,7 +38,7 @@ namespace LogFrog.Telegram
             telegramBotClient.OnMessage += (e, args) => logFrogService.Log(new LogEvent
             {
                 DateTime = DateTime.Now,
-                Parameters = new LogEventParameters(),
+                Category = LogEventCategory.Info,
                 Text = args.Message.Text,
                 UserId = 1
             });

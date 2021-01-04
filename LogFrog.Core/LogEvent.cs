@@ -7,6 +7,6 @@ namespace LogFrog.Core
         public long UserId { get; set; }
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
-        public LogEventParameters Parameters { get; set; }
+        public LogEventCategory Category { get; set; }
     }
 }
