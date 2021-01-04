@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFrog", "LogFrog\LogFrog.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFrog.Telegram", "LogFrog.Telegram\LogFrog.Telegram.csproj", "{B33CCC96-703B-4CB1-A3D3-2B8E87884516}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogFrog.Utilities", "LogFrog.Utilities\LogFrog.Utilities.csproj", "{54563F8C-7FBE-43F5-AEBE-00A8D4A4E93F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{B33CCC96-703B-4CB1-A3D3-2B8E87884516}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B33CCC96-703B-4CB1-A3D3-2B8E87884516}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B33CCC96-703B-4CB1-A3D3-2B8E87884516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54563F8C-7FBE-43F5-AEBE-00A8D4A4E93F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54563F8C-7FBE-43F5-AEBE-00A8D4A4E93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54563F8C-7FBE-43F5-AEBE-00A8D4A4E93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54563F8C-7FBE-43F5-AEBE-00A8D4A4E93F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

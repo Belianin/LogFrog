@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace LogFrog.Core
 {
-    public interface ILogFrogService
+    public interface ILog
     {
         void Log(LogEvent logEvent);
     }

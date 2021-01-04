@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using LogFrog.Core;
+using LogFrog.Core.Repositories;
 using LogFrog.Telegram;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +28,8 @@ namespace LogFrog
         {
             return services
                 .AddSingleton(GetTelegramSettings())
-                .AddSingleton<ILogFrogService, LogFrogService>()
+                .AddSingleton<ILog, FrogLog>()
+                .AddSingleton<ILogRepository, FileLogRepository>()
                 .AddHostedService<TelegramWorker>();
         }
 
