@@ -15,10 +15,10 @@ namespace LogFrog.Telegram
         private readonly ITelegramBotClient telegramBotClient;
         private readonly ILog log;
 
-        public TelegramWorker(string telegramToken, ILog log)
+        public TelegramWorker(TelegramWorkerSettings settings, ILog log)
         {
             this.log = log;
-            telegramBotClient = new TelegramBotClient(telegramToken);
+            telegramBotClient = new TelegramBotClient(settings.Token);
             
             ConfigureTelegramClient();
         }
@@ -45,7 +45,7 @@ namespace LogFrog.Telegram
                 DateTime = DateTime.Now,
                 Category = LogEventCategory.Info,
                 Text = message.Text,
-                Id = message.From.Id
+                UserId = message.From.Id
             });
         }
 
