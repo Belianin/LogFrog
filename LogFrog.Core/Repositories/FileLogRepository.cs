@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LogFrog.Core.Repositories
@@ -33,11 +35,24 @@ namespace LogFrog.Core.Repositories
             if (events.Count == 0)
                 return;
             
+            // пока пойдет и так
             foreach (var logEvent in events)
             {
-                var file = File.AppendText($"{logEvent.UserId.ToString()}.log.txt");
-                await file.WriteLineAsync($"{logEvent.DateTime:yyyy-mm-dd hh:MM:ss} [{logEvent.Category.ToString().ToUpper()}] {logEvent.Text}");
+                var file = File.Open($"{logEvent.UserId.ToString()}.log", FileMode.Append, FileAccess.Write,
+                    FileShare.ReadWrite);
+                var writer = new StreamWriter(file);
+                await writer.WriteAsync(EventToString(logEvent));
+                writer.Close();
             }
+        }
+
+        private string EventToString(LogEvent logEvent)
+        {
+            var parameters = string.Join(";", logEvent.Parameters?.Select(x => $";{x.Key}:{x.Value}") ?? Array.Empty<string>());
+            var text = logEvent.Text == null ? "" : $";{logEvent.Text}";
+            
+            
+            return $"{logEvent.DateTime:yyyy-mm-dd hh:MM:ss};{logEvent.Category.ToString()}{text}{parameters}{Environment.NewLine}";
         }
     }
 }
