@@ -5,6 +5,7 @@ namespace LogFrog.Core
         Info,
         Payment,
         Food,
-        Sleep
+        Sleep,
+        Cigarette
     }
 }

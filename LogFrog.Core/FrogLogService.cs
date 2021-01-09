@@ -2,11 +2,11 @@
 
 namespace LogFrog.Core
 {
-    public class FrogLog : ILog
+    public class FrogLogService : ILogService
     {
         private readonly ILogRepository repository;
 
-        public FrogLog(ILogRepository repository)
+        public FrogLogService(ILogRepository repository)
         {
             this.repository = repository;
         }

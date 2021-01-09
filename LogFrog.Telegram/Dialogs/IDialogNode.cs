@@ -1,4 +1,5 @@
-﻿using Telegram.Bot.Types.ReplyMarkups;
+﻿using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace LogFrog.Telegram.Dialogs
 {
@@ -6,6 +7,6 @@ namespace LogFrog.Telegram.Dialogs
     {
         string Text { get; }
         IReplyMarkup Markup { get; }
-        IDialogNode Reply(string text);
+        IDialogNode? Reply(Message message);
     }
 }

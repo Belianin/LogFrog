@@ -15,13 +15,12 @@ namespace LogFrog.Telegram
     public class TelegramWorker : BackgroundService
     {
         private readonly ITelegramBotClient telegramBotClient;
-        private readonly ILog log;
-        
+        private readonly IStartNodeProvider startNodeProvider;
         private readonly Dictionary<int, IDialogNode> userStates = new Dictionary<int, IDialogNode>();
 
-        public TelegramWorker(TelegramWorkerSettings settings, ILog log)
+        public TelegramWorker(TelegramWorkerSettings settings, IStartNodeProvider startNodeProvider)
         {
-            this.log = log;
+            this.startNodeProvider = startNodeProvider;
             telegramBotClient = new TelegramBotClient(settings.Token);
             
             ConfigureTelegramClient();
@@ -46,30 +45,18 @@ namespace LogFrog.Telegram
         {
             if (!userStates.TryGetValue(message.From.Id, out var node))
             {
-                node = new StartNode();
+                node = startNodeProvider.GetStartNode(message.From.Id);
                 userStates[message.From.Id] = node;
             }
 
-            if (node is StartNode)
-            {
-                log.Log(new LogEvent
-                {
-                    DateTime = DateTime.Now,
-                    Category = LogEventCategory.Info,
-                    Text = message.Text,
-                    UserId = message.From.Id
-                });
-            }
-            else
-            {
-                var reply = node.Reply(message.Text);
-                userStates[message.From.Id] = reply;
 
-                await telegramBotClient
-                    .SendTextMessageAsync(message.Chat.Id, reply.Text, ParseMode.MarkdownV2, replyMarkup: reply.Markup)
-                    .ConfigureAwait(false);
+            var reply = node.Reply(message) ?? startNodeProvider.GetStartNode(message.From.Id);
 
-            }
+            userStates[message.From.Id] = reply;
+
+            await telegramBotClient
+                .SendTextMessageAsync(message.Chat.Id, reply.Text, ParseMode.MarkdownV2, replyMarkup: reply.Markup)
+                .ConfigureAwait(false);
         }
     }
 }

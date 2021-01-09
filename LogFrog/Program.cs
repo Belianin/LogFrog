@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using LogFrog.Core;
 using LogFrog.Core.Repositories;
 using LogFrog.Telegram;
+using LogFrog.Telegram.Users;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -28,8 +29,10 @@ namespace LogFrog
         {
             return services
                 .AddSingleton(GetTelegramSettings())
-                .AddSingleton<ILog, FrogLog>()
+                .AddSingleton<ILogService, FrogLogService>()
                 .AddSingleton<ILogRepository, FileLogRepository>()
+                .AddSingleton<IUserSettingRepository, MonoUserSettingsRepository>()
+                .AddSingleton<IStartNodeProvider, StartNodeProvider>()
                 .AddHostedService<TelegramWorker>();
         }
 

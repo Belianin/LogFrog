@@ -7,7 +7,7 @@ namespace LogFrog.Core.Repositories
     public class FileLogRepository : ILogRepository
     {
         private readonly Queue<LogEvent> events = new Queue<LogEvent>();
-        private Task taskLoop;
+        private readonly Task taskLoop;
 
         public FileLogRepository()
         {
@@ -32,23 +32,11 @@ namespace LogFrog.Core.Repositories
         {
             if (events.Count == 0)
                 return;
-
-            var files = new Dictionary<int, StreamWriter>();
-
-            StreamWriter GetLogFile(int id)
-            {
-                if (files.TryGetValue(id, out var file))
-                    return file;
-
-                file = File.AppendText($"{id.ToString()}.log.txt");
-                files[id] = file;
-
-                return file;
-            }
             
             foreach (var logEvent in events)
             {
-                await GetLogFile(logEvent.UserId).WriteLineAsync($"{logEvent.DateTime:yyyy-mm-dd hh:MM:ss} [{logEvent.Category.ToString().ToUpper()}] {logEvent.Text}");
+                var file = File.AppendText($"{logEvent.UserId.ToString()}.log.txt");
+                await file.WriteLineAsync($"{logEvent.DateTime:yyyy-mm-dd hh:MM:ss} [{logEvent.Category.ToString().ToUpper()}] {logEvent.Text}");
             }
         }
     }
