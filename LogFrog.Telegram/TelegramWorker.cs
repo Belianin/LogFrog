@@ -4,9 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using LogFrog.Core;
 using LogFrog.Core.Repositories;
+using LogFrog.Telegram.Dialogs;
 using Microsoft.Extensions.Hosting;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace LogFrog.Telegram
 {
@@ -14,6 +16,8 @@ namespace LogFrog.Telegram
     {
         private readonly ITelegramBotClient telegramBotClient;
         private readonly ILog log;
+        
+        private readonly Dictionary<int, IDialogNode> userStates = new Dictionary<int, IDialogNode>();
 
         public TelegramWorker(TelegramWorkerSettings settings, ILog log)
         {
@@ -35,19 +39,37 @@ namespace LogFrog.Telegram
 
         private void ConfigureTelegramClient()
         {
-            telegramBotClient.OnMessage += (e, args) => LogMessage(args.Message);
+            telegramBotClient.OnMessage += async (e, args) => await OnMessageAsync(args.Message);
         }
 
-        private void LogMessage(Message message)
+        private async Task OnMessageAsync(Message message)
         {
-            log.Log(new LogEvent
+            if (!userStates.TryGetValue(message.From.Id, out var node))
             {
-                DateTime = DateTime.Now,
-                Category = LogEventCategory.Info,
-                Text = message.Text,
-                UserId = message.From.Id
-            });
-        }
+                node = new StartNode();
+                userStates[message.From.Id] = node;
+            }
 
+            if (node is StartNode)
+            {
+                log.Log(new LogEvent
+                {
+                    DateTime = DateTime.Now,
+                    Category = LogEventCategory.Info,
+                    Text = message.Text,
+                    UserId = message.From.Id
+                });
+            }
+            else
+            {
+                var reply = node.Reply(message.Text);
+                userStates[message.From.Id] = reply;
+
+                await telegramBotClient
+                    .SendTextMessageAsync(message.Chat.Id, reply.Text, ParseMode.MarkdownV2, replyMarkup: reply.Markup)
+                    .ConfigureAwait(false);
+
+            }
+        }
     }
 }
