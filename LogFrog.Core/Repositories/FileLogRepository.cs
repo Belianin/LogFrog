@@ -35,24 +35,35 @@ namespace LogFrog.Core.Repositories
             if (events.Count == 0)
                 return;
             
-            // пока пойдет и так
-            foreach (var logEvent in events)
+            var groupedEvents = new Dictionary<int, List<LogEvent>>();
+
+            while (events.Count != 0)
             {
-                var file = File.Open($"{logEvent.UserId.ToString()}.log", FileMode.Append, FileAccess.Write,
-                    FileShare.ReadWrite);
+                var logEvent = events.Dequeue();
+                if (!groupedEvents.ContainsKey(logEvent.UserId))
+                    groupedEvents[logEvent.UserId] = new List<LogEvent>();
+                
+                groupedEvents[logEvent.UserId].Add(logEvent);
+            }
+
+            foreach (var (userId, eventList) in groupedEvents)
+            {
+                var file = File.Open($"{userId.ToString()}.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
                 var writer = new StreamWriter(file);
-                await writer.WriteAsync(EventToString(logEvent));
+                var line = string.Join(Environment.NewLine, eventList.Select(EventToString));
+                await writer.WriteLineAsync(line);
                 writer.Close();
             }
         }
 
         private string EventToString(LogEvent logEvent)
         {
-            var parameters = string.Join(";", logEvent.Parameters?.Select(x => $";{x.Key}:{x.Value}") ?? Array.Empty<string>());
+            var parameters = logEvent.Parameters == null || logEvent.Parameters.Count == 0
+                ? ""
+                : $";{string.Join(",", logEvent.Parameters.Select(x => $"{x.Key}={x.Value}"))}";
             var text = logEvent.Text == null ? "" : $";{logEvent.Text}";
             
-            
-            return $"{logEvent.DateTime:yyyy-mm-dd hh:MM:ss};{logEvent.Category.ToString()}{text}{parameters}{Environment.NewLine}";
+            return $"{logEvent.DateTime:yyyy-MM-dd HH:mm:ss};{logEvent.Category.ToString()}{text}{parameters}";
         }
     }
 }
