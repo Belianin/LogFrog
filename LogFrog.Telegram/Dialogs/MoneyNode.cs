@@ -68,7 +68,7 @@ namespace LogFrog.Telegram.Dialogs
                 if (!decimal.TryParse(message.Text, out var amount))
                     return this;
                 
-                logService.Log(new LogEvent
+                var logEvent = new LogEvent
                 {
                     Category = LogEventCategory.Payment,
                     DateTime = DateTime.Now,
@@ -78,8 +78,9 @@ namespace LogFrog.Telegram.Dialogs
                         ["Amount"] = amount
                     },
                     UserId = message.From.Id
-                });
-                return null;
+                };
+                
+                return new WithTextNode(logEvent, logService);
             }
         }
     }

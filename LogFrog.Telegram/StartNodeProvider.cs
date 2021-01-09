@@ -19,8 +19,9 @@ namespace LogFrog.Telegram
             
             nodeSettings = new Dictionary<LogEventCategory, (string text, IDialogNode node)>
             {
-                [LogEventCategory.Cigarette] = ("🚬", new CigaretteNode(logService)),
-                [LogEventCategory.Payment] = ("💲", new MoneyNode(logService)),
+                [LogEventCategory.Cigarette] = ("🚬 сигареты", new CigaretteNode(logService)),
+                [LogEventCategory.Payment] = ("💲 платежи", new MoneyNode(logService)),
+                [LogEventCategory.Food] = ("🍴 пища", new FoodNode(logService))
             };
         }
 
