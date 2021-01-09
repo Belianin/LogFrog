@@ -6,7 +6,7 @@ namespace LogFrog.Core.Repositories
 {
     public class FileLogRepository : ILogRepository
     {
-        private readonly Queue<LogEvent> events = new();
+        private readonly Queue<LogEvent> events = new Queue<LogEvent>();
         private Task taskLoop;
 
         public FileLogRepository()

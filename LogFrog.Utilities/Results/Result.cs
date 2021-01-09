@@ -12,13 +12,13 @@ namespace LogFrog.Utilities.Results
         public string ErrorMessage => IsFail ? errorMessage : throw new ResultException("Unable to error message when result is ok");
         private Result() {}
 
-        public static Result<T> Ok(T value) => new()
+        public static Result<T> Ok(T value) => new Result<T>()
         {
             IsOk = true,
             value = value
         };
 
-        public static Result<T> Fail(string errorMessage) => new()
+        public static Result<T> Fail(string errorMessage) => new Result<T>()
         {
             IsOk = false,
             errorMessage = errorMessage
