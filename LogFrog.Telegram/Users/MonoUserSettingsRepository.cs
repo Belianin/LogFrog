@@ -11,7 +11,8 @@ namespace LogFrog.Telegram.Users
             {
                 Categories = new List<LogEventCategory>
                 {
-                    LogEventCategory.Cigarette
+                    LogEventCategory.Cigarette,
+                    LogEventCategory.Payment
                 }
             };
         }
