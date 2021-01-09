@@ -60,10 +60,10 @@ namespace LogFrog.Core.Repositories
         {
             var parameters = logEvent.Parameters == null || logEvent.Parameters.Count == 0
                 ? ""
-                : $";{string.Join(",", logEvent.Parameters.Select(x => $"{x.Key}={x.Value}"))}";
-            var text = logEvent.Text == null ? "" : $";{logEvent.Text}";
-            
-            return $"{logEvent.DateTime:yyyy-MM-dd HH:mm:ss};{logEvent.Category.ToString()}{text}{parameters}";
+                : $"{string.Join(",", logEvent.Parameters.Select(x => $"{x.Key}={x.Value}"))}";
+            var text = logEvent.Text ?? "";
+
+            return $"{logEvent.DateTime:yyyy-MM-dd HH:mm:ss};{logEvent.Category.ToString()};{text};{parameters}";
         }
     }
 }
